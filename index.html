@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com/3.1.8"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="mx-auto w-full max-w-sm m-8 shadow-lg">
+        <form class="bg-white shadow-md rounded p-6" x-data="convertBin">
+
+            <h1 class="text-3xl font-bold underline mb-0 text-center"> BIN2DEC </h1>
+            <p class="mb-8"> Binary-to-Decimal and Decimal-to-Binary number converter</p>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="binary"> Binary number: </label>
+                <div class="flex flex-row">
+                    <input 
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="binary"
+                        type="number"
+                        placeholder="Type binary number"
+                        autocomplete="off">
+                    <button type="button" id="binary-copy" class="ml-2" title="Copy">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyB0cmFuc2Zvcm09IiI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PHBhdGggZD0iTTAsMTcydi0xNzJoMTcydjE3MnoiIGZpbGw9Im5vbmUiPjwvcGF0aD48ZyBpZD0ib3JpZ2luYWwtaWNvbiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTIxLjUsMjEuNXYxMDcuNWgzNy42MjV2LTEwLjc1aC0yNi44NzV2LTg2aDY0LjV2NS4zNzVoMTAuNzV2LTE2LjEyNXpNNjQuNSw0M3YxMDcuNWg4NnYtMTA3LjV6TTc1LjI1LDUzLjc1aDY0LjV2ODZoLTY0LjV6Ij48L3BhdGg+PC9nPjxwYXRoIGQ9IiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvZz48L2c+PC9zdmc+" class="w-10">
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="decimal"> Decimal number: </label>
+                <div class="flex flex-row">
+                    <input 
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="decimal"
+                        type="number"
+                        placeholder="Type decimal number"
+                        autocomplete="off">
+                    <button type="button" id="decimal-copy" class="ml-2" title="Copy">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyB0cmFuc2Zvcm09IiI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PHBhdGggZD0iTTAsMTcydi0xNzJoMTcydjE3MnoiIGZpbGw9Im5vbmUiPjwvcGF0aD48ZyBpZD0ib3JpZ2luYWwtaWNvbiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTIxLjUsMjEuNXYxMDcuNWgzNy42MjV2LTEwLjc1aC0yNi44NzV2LTg2aDY0LjV2NS4zNzVoMTAuNzV2LTE2LjEyNXpNNjQuNSw0M3YxMDcuNWg4NnYtMTA3LjV6TTc1LjI1LDUzLjc1aDY0LjV2ODZoLTY0LjV6Ij48L3BhdGg+PC9nPjxwYXRoIGQ9IiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvZz48L2c+PC9zdmc+" class="w-10">
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    
+    <script type="text/javascript">
+        const binaryInput = document.getElementById('binary');
+        const decimalInput = document.getElementById('decimal');
+
+        const binaryBtnCopy = document.getElementById('binary-copy');
+        const decimalBtnCopy = document.getElementById('decimal-copy');
+
+        binaryInput.addEventListener('input', (event)=>{
+            //Forma 1: leer/modificar el valor desde el evento
+            event.target.value = event.target.value.replace(/[^0-1]/,'');
+            decimalInput.value = binToDec(event.target.value);
+        });
+
+        decimalInput.addEventListener('input', ()=>{
+            //Forma 2: Leer/modificar el valor desde el input directamente
+            decimalInput.value = decimalInput.value.replace(/[^\d]/,'');
+            binaryInput.value = decToBin(decimalInput.value);
+        });
+
+        binaryBtnCopy.addEventListener('click', ()=>{ copyToClipboard(binaryInput.value) });
+        decimalBtnCopy.addEventListener('click', ()=>{ copyToClipboard(decimalInput.value) });
+
+        const divInt = (a, b)=>{ return Math.floor(a/b); };
+        const copyToClipboard = (text)=>{ navigator.clipboard?.writeText && navigator.clipboard.writeText(text) };
+
+        const binToDec = (bin)=>{
+            if(isNaN(bin)) return '';
+            let decimal = 0;
+            let length = bin.length - 1;
+            for (var i = 0; i <= length; i++) {
+                let exp = Math.pow(2, length - i); //Calculate in reverse orden
+                decimal+= bin[i] * exp;
+            }
+            return decimal;
+        }
+
+        const decToBin = (decimal)=>{
+            if(isNaN(decimal)) return '';
+            let binary = [];
+            do{
+                binary.push(decimal % 2);
+                decimal = divInt(decimal, 2);
+            }while(decimal != 0)
+            return binary.reverse().join('');
+        }
+    </script>
+</body>
+</html>
