@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com/3.1.8"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
 <body class="bg-slate-100">
     <div class="mx-auto w-full max-w-sm m-8 shadow-lg">
@@ -16,14 +17,19 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="binary"> Binary number: </label>
                 <div class="flex flex-row">
                     <input 
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="flex appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="binary"
                         type="number"
+                        x-model="binary"
+                        @input="binToDec"
                         placeholder="Type binary number"
                         autocomplete="off">
-                    <button type="button" id="binary-copy" class="ml-2" title="Copy">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyB0cmFuc2Zvcm09IiI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PHBhdGggZD0iTTAsMTcydi0xNzJoMTcydjE3MnoiIGZpbGw9Im5vbmUiPjwvcGF0aD48ZyBpZD0ib3JpZ2luYWwtaWNvbiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTIxLjUsMjEuNXYxMDcuNWgzNy42MjV2LTEwLjc1aC0yNi44NzV2LTg2aDY0LjV2NS4zNzVoMTAuNzV2LTE2LjEyNXpNNjQuNSw0M3YxMDcuNWg4NnYtMTA3LjV6TTc1LjI1LDUzLjc1aDY0LjV2ODZoLTY0LjV6Ij48L3BhdGg+PC9nPjxwYXRoIGQ9IiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvZz48L2c+PC9zdmc+" class="w-10">
-                    </button>
+
+                    <div class="flex justify-end">
+                        <button type="button" class="flex items-center py-2 px-3 text-xs font-medium text-gray-600 bg-gray-100 border-l border-gray-200 hover:text-blue-700" title="Copy" @click="copyBinary">
+                            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span class="copy-text">Copy</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -31,41 +37,71 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="decimal"> Decimal number: </label>
                 <div class="flex flex-row">
                     <input 
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="flex appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="decimal"
                         type="number"
+                        x-model="decimal"
+                        @input="decToBin"
                         placeholder="Type decimal number"
                         autocomplete="off">
-                    <button type="button" id="decimal-copy" class="ml-2" title="Copy">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyB0cmFuc2Zvcm09IiI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PHBhdGggZD0iTTAsMTcydi0xNzJoMTcydjE3MnoiIGZpbGw9Im5vbmUiPjwvcGF0aD48ZyBpZD0ib3JpZ2luYWwtaWNvbiIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTIxLjUsMjEuNXYxMDcuNWgzNy42MjV2LTEwLjc1aC0yNi44NzV2LTg2aDY0LjV2NS4zNzVoMTAuNzV2LTE2LjEyNXpNNjQuNSw0M3YxMDcuNWg4NnYtMTA3LjV6TTc1LjI1LDUzLjc1aDY0LjV2ODZoLTY0LjV6Ij48L3BhdGg+PC9nPjxwYXRoIGQ9IiIgZmlsbD0ibm9uZSI+PC9wYXRoPjwvZz48L2c+PC9zdmc+" class="w-10">
-                    </button>
+                    <div class="flex justify-end">
+                        <button type="button" class="flex items-center py-2 px-3 text-xs font-medium text-gray-600 bg-gray-100 border-l border-gray-200 hover:text-blue-700" title="Copy" @click="copyDecimal">
+                            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span class="copy-text">Copy</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
+            <div class="flex absolute top-5 right-5 items-center p-4 space-x-4 w-full max-w-xs text-blue-700 bg-blue-100 rounded-lg divide-x divide-gray-200 shadow" role="alert" x-show="message">
+                <div class="text-sm font-normal" x-text="message"></div>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="button" class="py-2 px-5 text-gray-900 text-xs font-medium focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200" @click="clear">Clear</button>
+            </div>
         </form>
     </div>
     
     <script type="text/javascript">
-        const binaryInput = document.getElementById('binary');
-        const decimalInput = document.getElementById('decimal');
-
-        const binaryBtnCopy = document.getElementById('binary-copy');
-        const decimalBtnCopy = document.getElementById('decimal-copy');
-
-        binaryInput.addEventListener('input', (event)=>{
-            //Forma 1: leer/modificar el valor desde el evento
-            event.target.value = event.target.value.replace(/[^0-1]/,'');
-            decimalInput.value = binToDec(event.target.value);
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('convertBin', () => ({
+                binary: null,
+                decimal: null,
+                message: null,
+                isError: 0,
+                timeout: null,
+                binToDec() {
+                    let cleanValue = this.binary.replace(/[^0-1]/,'');
+                    if(cleanValue != this.binary) this.setMessage('Only numbers 0 and 1')
+                    this.binary = cleanValue;
+                    this.decimal = binToDec(this.binary);
+                },
+                decToBin() {
+                    let cleanValue = this.decimal.replace(/[^0-9]/,'');
+                    if(cleanValue != this.decimal) this.setMessage('Only numbers of 0 at 9')
+                    this.decimal = cleanValue;
+                    this.binary = decToBin(this.decimal);
+                }, 
+                copyDecimal(){
+                    this.setMessage('Copy to clipboard!')
+                    copyToClipboard(this.decimal);
+                },
+                copyBinary(){
+                    this.setMessage('Copy to clipboard!')
+                    copyToClipboard(this.binary);
+                },
+                setMessage(text){
+                    this.message = text;
+                    clearTimeout(this.timeout);
+                    this.timeout = setTimeout(()=>{ this.message = null; }, 3000);
+                },
+                clear(){
+                    this.setMessage('Cleared!');
+                    this.binary = null;
+                    this.decimal = null;
+                }
+            }));
         });
-
-        decimalInput.addEventListener('input', ()=>{
-            //Forma 2: Leer/modificar el valor desde el input directamente
-            decimalInput.value = decimalInput.value.replace(/[^\d]/,'');
-            binaryInput.value = decToBin(decimalInput.value);
-        });
-
-        binaryBtnCopy.addEventListener('click', ()=>{ copyToClipboard(binaryInput.value) });
-        decimalBtnCopy.addEventListener('click', ()=>{ copyToClipboard(decimalInput.value) });
 
         const divInt = (a, b)=>{ return Math.floor(a/b); };
         const copyToClipboard = (text)=>{ navigator.clipboard?.writeText && navigator.clipboard.writeText(text) };
